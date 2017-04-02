@@ -1,0 +1,17 @@
+=> Booting Puma
+=> Rails 5.0.2 application starting in development on http://localhost:3000
+=> Run `rails server -h` for more startup options
+Puma starting in single mode...
+* Version 3.8.2 (ruby 2.3.1-p112), codename: Sassy Salamander
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://localhost:3000
+Use Ctrl-C to stop
+Started GET "/" for 127.0.0.1 at 2017-04-02 14:19:17 +0200
+Processing by HomeController#index as HTML
+  Rendering home/index.html.erb within layouts/application
+  Rendered home/index.html.erb within layouts/application (2.5ms)
+Completed 200 OK in 316ms (Views: 304.0ms | ActiveRecord: 0.0ms)
+
+
+Exiting
