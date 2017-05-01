@@ -3,6 +3,8 @@
   <h1>Witaj w systemie Sprawozdania PRz</h1>
   <h2>Zaloguj się, aby skorzystać z serwisu</h2>
 
-  <%= link_to "Zaloguj się", "#", class: "btn btn-lg btn-primary" %>
+  <%= link_to "Zaloguj się", login_path, class: "btn btn-lg btn-primary" %>
+
+  <h2>Jeżeli nie masz jeszcze konta, możesz założyć je <%= link_to "tutaj", signup_path %></h2>
 </div>
 
