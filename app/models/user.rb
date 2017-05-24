@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  attr_accessor :remember_token
-  before_save { email.downcase! }
+  attr_accessor :remember_token, :activation_token
+  before_save :downcase_email
   validates :name, presence: true, length: {maximum: 50}
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@prz.edu.pl|stud.prz.edu.pl+\z/i
   validates :email, presence: true, length: {maximum: 255},
@@ -8,7 +8,7 @@ class User < ApplicationRecord
             uniqueness: {case_sensitive: false}
 
   has_secure_password
-  validates :password, presence: true, length: {minimum: 6}
+  validates :password, presence: true, length: {minimum: 6}, allow_nil: true
 
   def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
@@ -25,12 +25,22 @@ class User < ApplicationRecord
     update_attribute(:remember_digest,User.digest(remember_token))
   end
 
-  def authenticated?(remember_token)
-    return false if remember_digest.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
-  end
 
   def forget
     update_attribute(:remember_digest,nil)
   end
+
+  def authenticated?(attribute,token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end
+
+
+  private
+
+    def downcase_email
+      self.email = email.downcase
+    end
+
 end

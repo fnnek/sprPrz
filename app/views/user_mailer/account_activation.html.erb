@@ -1,0 +1,10 @@
+<h1>Sprawozdania PRz</h1>
+
+<p>Witaj <%= @user.name %>,</p>
+
+<p>
+  Witaj w systemie sprawozdań PRz. Kliknij w link poniżej aby aktywować swoje konto:
+</p>
+
+<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+                                                    email: @user.email) %>
