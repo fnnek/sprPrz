@@ -1,0 +1,7 @@
+<li id="message-<%= message.id %>">
+
+  <span class="content"><%= message.content %></span>
+  <span class="timestamp">
+    Opubikowana <%= time_ago_in_words(message.created_at) %> temu.
+  </span>
+</li>

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(name: "Example User",
-              email: "example@prz.edu.pl",
+              email: "mb@prz.edu.pl",
               password: "foopass",
               password_confirmation: "foopass",
               admin: true)
@@ -20,4 +20,10 @@ User.create!(name: "Example User",
               email: email,
               password: password,
               password_confirmation: password)
+end
+
+users = User.order(:created_at).take(6)
+50.times do
+  content = Faker::Lorem.sentence(5)
+  users.each { |user| user.messages.create!(content: content)}
 end

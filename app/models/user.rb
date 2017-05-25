@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :messages, dependent: :destroy
   attr_accessor :remember_token, :activation_token
   before_save :downcase_email
   validates :name, presence: true, length: {maximum: 50}
@@ -30,10 +31,9 @@ class User < ApplicationRecord
     update_attribute(:remember_digest,nil)
   end
 
-  def authenticated?(attribute,token)
-    digest = send("#{attribute}_digest")
-    return false if digest.nil?
-    BCrypt::Password.new(digest).is_password?(token)
+  def authenticated?(remember_token)
+    return false if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
 
