@@ -8,11 +8,18 @@
           <section class="user_info">
             <%= render 'shared/user_info'  %>
           </section>
+          <% if current_user.admin?%>
           <section class="micropost_form">
             <%= render 'shared/messages_form' %>
           </section>
+          <% end %>
         </aside>
+        <div class="col-md-8">
+          <h3>Wiadomości</h3>
+          <%= render 'shared/feed' %>
+        </div>
       </div>
+
   <% else %>
 
   <h2>Zaloguj się, aby skorzystać z serwisu</h2>

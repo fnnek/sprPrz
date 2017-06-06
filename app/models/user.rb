@@ -26,6 +26,10 @@ class User < ApplicationRecord
     update_attribute(:remember_digest,User.digest(remember_token))
   end
 
+  def feed
+    Message.where("user_id = ?",id)
+  end
+
 
   def forget
     update_attribute(:remember_digest,nil)
