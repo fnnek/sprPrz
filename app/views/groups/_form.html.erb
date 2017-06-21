@@ -1,0 +1,12 @@
+<%= form_for(@group) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="field">
+      Nazwa grupy
+      <%= f.text_field :title, placeholder: "Wpisz nazwę grupy" %>
+      Opis grupy
+      <%= f.text_area :description, placeholder: "Wpisz opis grupy, np. tematy ćwiczeń, opis zadań itp.", rows: "10" %>
+      Kod grupy (domyślnie Symbol roku - numer grupy laboratoryjnej - symbol przedmiotu - semestr, np 3EFDI-L01-NTP-17L)
+      <%= f.text_field :group_code, placeholder: "Wpisz kod grupy" %>
+    </div>
+    <%= f.submit "Wyślij", class: "btn btn-primary" %>
+<% end %>

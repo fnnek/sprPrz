@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
   before_action :admin_user, only: :destroy
 
+
   def index
     @users = User.all.paginate(page: params[:page])
   end
@@ -59,11 +60,27 @@ class UsersController < ApplicationController
     #end
   end
 
+  def assign_to_group
+    @user=User.find(params[:user_id])
+    @group=Group.find(params[:group_id])
+    @user.groups << @group unless @user.groups.include? @group
+    @user.save!
+    redirect_to user_path @user
+  end
+
+  def remove_from_group
+    @user=User.find(params[:user_id])
+    @group=Group.find(params[:group_id])
+    @user.groups.delete @group
+    @user.save!
+    redirect_to user_path @user
+  end
+
   private
 
     def user_params
       params.require(:user).permit(:name, :email, :password,
-                                   :password_confirmation)
+                                   :password_confirmation, :group_id, :user_id)
     end
 
     #def logged_in_user

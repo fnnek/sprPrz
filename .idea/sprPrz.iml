@@ -147,6 +147,7 @@
     <orderEntry type="library" scope="PROVIDED" name="faker (v1.6.6, ruby-2.3.1-p112) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.9.18, ruby-2.3.1-p112) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v0.3.7, ruby-2.3.1-p112) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="groupify (v0.9.0, ruby-2.3.1-p112) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v0.8.1, ruby-2.3.1-p112) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jbuilder (v2.6.3, ruby-2.3.1-p112) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="jquery-rails (v4.3.1, ruby-2.3.1-p112) [gem]" level="application" />

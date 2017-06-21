@@ -1,0 +1,33 @@
+<h1><%= @group.title %></h1>
+<h2><%= @group.group_code %></h2>
+<%= link_to 'Wróć', groups_url %>
+
+
+<%if current_user.groups.include? @group %>
+    <aside>
+  <h3>Opis grupy</h3>
+  <p><%= @group.description %> </p>
+    <h3>Prowadzący</h3>
+    <ul class="users">
+      <% @teacher.each do |user| %>
+          <li><%= link_to user.name, user %>
+            <% if current_user.admin? && !current_user?(user) %>
+                | <%= link_to "(usuń użytkownika)", user, method: :delete, data:{confirm: "Czy na pewno?"} %>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+  <h3>Członkowie grupy</h3>
+    <ul class="users">
+      <% @users.each do |user| %>
+          <li><%= link_to user.name, user %>
+            <% if current_user.admin? && !current_user?(user) %>
+                | <%= link_to "(usuń użytkownika z grupy)", user, method: :delete, data:{confirm: "Czy na pewno?"} %>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+    </aside>
+<% else %>
+    <p>Nie należysz do tej grupy!</p>
+<% end %>

@@ -9,6 +9,11 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships, source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  groupify :group_member
+  groupify :named_group_member
+  #groupify :group_membership
+  has_and_belongs_to_many :groups, join_table: "groups_users"
+
   attr_accessor :remember_token, :activation_token
   before_save :downcase_email
   validates :name, presence: true, length: {maximum: 50}
