@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  get 'reports/index'
+
+  get 'reports/new'
+
+  get 'reports/create'
+
+  get 'reports/destroy'
+  get 'reports/show'
+
   get 'sessions/new'
 
   get 'users/new'
@@ -20,9 +29,11 @@ Rails.application.routes.draw do
   root :to => 'home#index'
 
   resources :groups
+  resources :reports
 
   resources :messages, only: [:create,:destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :reports, only: [:index, :new, :create, :destroy]
 
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

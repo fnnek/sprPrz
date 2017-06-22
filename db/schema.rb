@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170617141612) do
+ActiveRecord::Schema.define(version: 20170622103831) do
 
   create_table "group_memberships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "member_type",     null: false
@@ -33,6 +33,11 @@ ActiveRecord::Schema.define(version: 20170617141612) do
     t.string   "title"
     t.string   "description"
     t.string   "group_code"
+  end
+
+  create_table "groups_reports", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "group_id",  null: false
+    t.integer "report_id", null: false
   end
 
   create_table "groups_users", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -59,6 +64,18 @@ ActiveRecord::Schema.define(version: 20170617141612) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
   end
 
+  create_table "reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.string   "attachment"
+    t.decimal  "mark",            precision: 10
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.integer  "user_id"
+    t.string   "student_comment"
+    t.string   "teacher_comment"
+    t.index ["user_id"], name: "index_reports_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "email"
@@ -71,4 +88,5 @@ ActiveRecord::Schema.define(version: 20170617141612) do
   end
 
   add_foreign_key "messages", "users"
+  add_foreign_key "reports", "users"
 end

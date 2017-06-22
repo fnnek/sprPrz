@@ -28,6 +28,47 @@
       <% end %>
     </ul>
     </aside>
+    <div>
+      <h3>Sprawozdania</h3>
+      <table class = "table table-bordered table-striped">
+        <thead>.
+        <tr>
+          <th>Tytuł</th>
+
+          <th>Plik</th>
+          <% if logged_in? && current_user.admin? %>
+              <th>Autor</th>
+          <% end %>
+          <th>Akcja </th>
+          <th>Ocena </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @reports.each do |report| %>
+
+            <tr>
+              <td><%= report.title %></td>
+              <td><%= link_to "Pobierz", report.attachment_url %></td>
+              <% if logged_in? && current_user.admin? %>
+                  <td><%= link_to report.user.name, report.user %></td>
+              <% end %>
+
+              <td>
+                <% if !current_user.admin? %>
+                  <%= button_to "usuń",  report, method: :delete, class: "btn btn-danger", confirm: "Czy na pewno?" %>
+                <% else %>
+                    <%= button_to "oceń",  report, method: :get, class: "btn btn-primary" %>
+                <% end %>
+              </td>
+              <td><% if report.mark == nil %>  "Brak oceny" <%else%> <%= report.mark  %> <% end %></td>
+            </tr>
+
+        <% end %>
+        </tbody>
+
+      </table>
+    </div>
 <% else %>
     <p>Nie należysz do tej grupy!</p>
 <% end %>

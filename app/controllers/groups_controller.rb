@@ -6,9 +6,6 @@ class GroupsController < ApplicationController
   def index
     @groups = Group.all.where(['group_code LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page])
     @teacher = User.in_group(@group).as('teacher')
-
-
-
   end
 
   def new
@@ -21,6 +18,12 @@ class GroupsController < ApplicationController
   def show
     @teacher = User.in_group(@group).as('teacher')
     @users = @group.users
+    if !current_user.admin?
+      @reports = Report.in_group(@group).where(:user_id => current_user.id)
+    else
+      @reports = Report.in_group(@group)
+    end
+
   end
 
   def edit

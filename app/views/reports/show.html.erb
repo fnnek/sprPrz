@@ -1,0 +1,51 @@
+<h1>Sprawozdanie </h1>
+<table class = "table table-bordered table-striped">
+  <thead>.
+  <tr>
+    <th>Tytuł</th>
+    <% if logged_in? && current_user.admin? %>
+        <th>Autor</th>
+    <% end %>
+    <th>Plik</th>
+    <th>Grupa </th>
+    <th>Ocena </th>
+    <th>Komentarz studenta</th>
+    <th>Komentarz prowadzącego</th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+
+      <tr>
+        <td><%= @report.title %></td>
+        <% if logged_in? && current_user.admin? %>
+            <td><%= link_to @report.user.name, @report.user %></td>
+        <% end %>
+        <td><%= link_to "Pobierz", @report.attachment_url %></td>
+
+        <td><%  Group.with_member(@report).each do |group| %>
+              <%= link_to group.group_code, group %>
+
+
+          <% end %></td>
+        <td><% if @report.mark == nil %>  "Brak oceny" <%else%> <%= @report.mark  %> <% end %></td>
+        <td><% if @report.student_comment == nil %>  - <%else%> <%= @report.student_comment %> <% end %></td>
+        <td><% if @report.student_comment == nil %>  - <%else%> <%= @report.teacher_comment  %> <% end %></td>
+      </tr>
+
+
+  </tbody>
+</table>
+
+<div class = "well">
+  <%= form_for @report, html: { multipart: true } do |f| %>
+      <b>Komentarz prowadzącego</b>
+      <%= f.text_area :teacher_comment %>
+      <b>Ocena</b>
+      <%= f.text_field :mark %>
+
+      <%= f.submit "Wyślij", class: "btn btn-primary" %> <br/><br/>
+
+  <% end %>
+</div>

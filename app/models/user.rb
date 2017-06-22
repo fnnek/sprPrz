@@ -13,6 +13,7 @@ class User < ApplicationRecord
   groupify :named_group_member
   #groupify :group_membership
   has_and_belongs_to_many :groups, join_table: "groups_users"
+  has_many :reports
 
   attr_accessor :remember_token, :activation_token
   before_save :downcase_email

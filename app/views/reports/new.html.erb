@@ -1,0 +1,30 @@
+<h1>Dodaj sprawozdanie</h1>
+
+<% if !@report.errors.empty? %>
+    <div class = "alert alert-error">
+
+      <ul>
+        <% @report.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+
+    </div>
+<% end %>
+
+<div class = "well">
+  <%= form_for @report, html: { multipart: true } do |f| %>
+      <b>Tytuł</b>
+      <%= f.text_field :title %>
+      <b>Plik</b> (tylko .pdf, .doc, .docx)
+      <%= f.file_field :attachment %>
+      <b>Grupa</b>
+      <% options = options_from_collection_for_select(@groups, :group_code, 'group_code') %>
+      <%= f.select :groups,  options %>
+      <b>Komentarz studenta</b>
+      <%= f.text_area :student_comment %>
+
+      <%= f.submit "Wyślij", class: "btn btn-primary" %> <br/><br/>
+
+  <% end %>
+</div>

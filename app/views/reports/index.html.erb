@@ -1,0 +1,48 @@
+<h1>Twoje sprawozdania</h1>
+
+<% if !flash[:notice].blank? %>
+    <div class = "alert alert-info">
+      <%= flash[:notice] %>
+    </div>
+<% end %>
+
+<br />
+
+<%= link_to "Dodaj sprawozdanie", new_report_path, class: "btn btn-primary" %>
+<br />
+<br />
+
+<table class = "table table-bordered table-striped">
+  <thead>.
+  <tr>
+    <th>Tytuł</th>
+    <th>Plik</th>
+    <th>Akcja</th>
+    <th>Grupa </th>
+    <th>Ocena </th>
+    <th>Komentarz studenta</th>
+    <th>Komentarz prowadzącego</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @reports.each do |report| %>
+
+      <tr>
+        <td><%= report.title %></td>
+        <td><%= link_to "Pobierz", report.attachment_url %></td>
+        <td><%= button_to "usuń",  report, method: :delete, class: "btn btn-danger", confirm: "Czy na pewno?" %></td>
+        <td><%  Group.with_member(report).each do |group| %>
+              <%= link_to group.group_code, group %>
+
+
+          <% end %></td>
+        <td><% if report.mark == nil %>  "Brak oceny" <%else%> <%= report.mark  %> <% end %></td>
+        <td><% if report.student_comment == nil %>  - <%else%> <%= report.student_comment %> <% end %></td>
+        <td><% if report.student_comment == nil %>  - <%else%> <%= report.teacher_comment  %> <% end %></td>
+      </tr>
+
+  <% end %>
+  </tbody>
+
+</table>
