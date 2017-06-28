@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
 
   def index
-    @users = User.all.paginate(page: params[:page])
+    @users = User.all.where(['name LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page])
   end
 
 
@@ -43,6 +43,18 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def grant_admin
+    @user = User.find(params[:user_id])
+    @user.admin = true
+    if @user.save && current_user.admin?
+      flash[:success] = "Przyznano prawa admina"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+
   end
 
   def destroy

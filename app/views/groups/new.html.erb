@@ -1,6 +1,11 @@
+<% provide(:title, "Utwórz grupę" )%>
 <h1>Utwórz nową grupę</h1>
+<% if logged_in? && current_user.admin? %>
 <div class="row">
 <%= render 'form' %>
 
 <%= link_to 'Wróć', groups_url %>
 </div>
+<% else %>
+<h2>Tylko prowadzący mogą tworzyć grupy!</h2>
+<% end %>

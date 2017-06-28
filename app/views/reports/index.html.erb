@@ -1,3 +1,4 @@
+<% provide(:title, "Sprawozdania" )%>
 <h1>Twoje sprawozdania</h1>
 
 <% if !flash[:notice].blank? %>
@@ -7,8 +8,9 @@
 <% end %>
 
 <br />
-
+<% if !current_user.admin? %>
 <%= link_to "Dodaj sprawozdanie", new_report_path, class: "btn btn-primary" %>
+
 <br />
 <br />
 
@@ -46,3 +48,9 @@
   </tbody>
 
 </table>
+
+<% else %>
+    <h2>Nie możesz przeglądać sprawozdań w tym miejscu</h2>
+    <h2>Sprawozdania swoich studentów możesz przeglądać na stronach poszczególnych grup</h2>
+
+<%end%>
