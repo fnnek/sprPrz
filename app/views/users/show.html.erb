@@ -1,18 +1,19 @@
 <% provide(:title, @user.name) %>
 <div class="row">
       <h1><%= @user.name %></h1>
+  <h2><% if current_user? @user %><%=link_to "Obserwowani", following_user_path %> <%  end%></h2>
 
-  <div class="col-md-8">
-    <%= render 'follow_form' if logged_in? %>
+
+    <%= render 'follow_form' if logged_in? && @user.admin?%>
     <% if @user.messages.any? %>
-      <h3>Wiadomości (<%= @user.messages.count %>) </h3>
+      <h3>Twoje wiadomości (<%= @user.messages.count %>) </h3>
       <ol class="messages">
         <%= render @messages %>
       </ol>
       <%= will_paginate @messages %>
     <% end %>
-  </div>
-  
+
+
   <h1>Twoje grupy</h1>
 
   <%= form_tag groups_path, :method => 'get' do %>
