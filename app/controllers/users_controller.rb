@@ -7,12 +7,14 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all.where(['name LIKE ?', "%#{params[:search]}%"]).paginate(page: params[:page])
+
   end
 
 
   def show
     @user = User.find(params[:id])
     @messages = @user.messages.paginate(page: params[:page])
+    @groups = Group.with_member(@user)
   end
 
   def new

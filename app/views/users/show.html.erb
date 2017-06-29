@@ -1,10 +1,6 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-  <aside class="col-md-4">
-    <section class="user_info">
       <h1><%= @user.name %></h1>
-    </section>
-  </aside>
 
   <div class="col-md-8">
     <%= render 'follow_form' if logged_in? %>
@@ -16,4 +12,56 @@
       <%= will_paginate @messages %>
     <% end %>
   </div>
+  
+  <h1>Twoje grupy</h1>
+
+  <%= form_tag groups_path, :method => 'get' do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Wpisz kod grupy"  %>
+      <%= submit_tag "Szukaj", :group_code => nil, class: "btn btn-primary"  %>
+  <% end %>
+
+
+  <table class="table table-bordered" >
+    <thead>
+    <tr>
+      <th>Kod grupy</th>
+      <th>Nazwa grupy </th>
+      <th>Prowadzący</th>
+      <% if logged_in? %>
+          <th>Akcja</th>
+      <% end %>
+    </tr>
+    </thead>
+    <tbody>
+    <% @groups.each do |group| %>
+        <tr>
+          <td><%= link_to group.group_code, group %></td>
+          <td><%= group.title %></td>
+          <td>
+
+            <%  User.in_group(group).as('teacher').each do |user| %>
+                <%= link_to user.name, user %>
+
+
+            <% end %>
+          </td>
+          <% if logged_in? %>
+              <% if  current_user.admin? %>
+                  <td> <%= link_to "usuń", group, method: :delete, data:{confirm: "Czy na pewno?"} %> | <%= link_to "edytuj", edit_group_path(group), method: :get %> </td>
+              <% else %> <td>
+          <% if current_user.groups.include? group %>
+
+              <%= link_to "opuść", remove_from_group_url( :group_id => group.id, :user_id => current_user.id), method: :post %> </td>
+          <% else %>
+              <%= link_to "dołącz", assign_to_group_url( :group_id => group.id, :user_id => current_user.id), method: :post  %> </td>
+
+          <% end %>
+              <% end %>
+          <% end %>
+
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+
 </div>
